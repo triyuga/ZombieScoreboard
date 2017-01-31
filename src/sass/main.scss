@@ -1,0 +1,11 @@
+// Variables
+@import '_variables.scss';
+
+body {
+  background-color: black;
+}
+
+body.zapzap {
+  background-image: url(../img/lightning_bg.gif);
+  background-size: 100% 100%;
+}
