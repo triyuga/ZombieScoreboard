@@ -2,23 +2,44 @@
 /* eslint-disable no-console, no-multi-spaces, import/no-extraneous-dependencies */
 const gulp         = require('gulp');
 const runSequence  = require('run-sequence');
+const Spinner      = require('cli-spinner').Spinner;
 const gutil        = require('gulp-util');
 const del          = require('del');
+const fs           = require('fs-extra');
+const cssnano      = require('gulp-cssnano');
+const sass         = require('gulp-sass');
+const notify 	   = require('gulp-notify');
+const chalk        = require('chalk');
 // ...
 gutil.log = gutil.noop;
 
 gulp.task('watch', () => {
 	gulp.run('build');
-	gulp.watch([`${SRC_CLIENT_DIR}/**/*`, `${APP_STATIC_DIR}/main.js`], ['build']);
+	gulp.watch([`src/**/*`], ['build']);
 });
 
-gulp.task('purge:cache', () => {
-	return del(`${CLIENT_CACHE}`);
+gulp.task('clean:client', () => {
+	return del([`app/**/*`]);
 });
 
-// Default task for dev - watch Files For Changes
-// The build task is in gulp/client-build.js
-gulp.task('default', ['purge:cache'], () => {
+gulp.task('pullBootstrap:client', () => {
+	return gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css'])
+		.pipe(gulp.dest('app/css'));
+});
+
+gulp.task('pullJQuery:client', () => {
+	return gulp.src(['node_modules/jquery/dist/jquery.min.js'])
+		.pipe(gulp.dest('app/js'));
+});
+
+gulp.task('sass:client', () => {
+	return gulp.src([`src/sass/main.scss`])
+		.pipe(sass())
+		.pipe(cssnano())
+		.pipe(gulp.dest(`srv/css`));
+});
+
+gulp.task('default', () => {
 	runSequence('build', 'watch');
 });
 
@@ -28,15 +49,16 @@ gulp.task('build', (done) => {
 	spinner.setSpinnerTitle('%s Rebuilding the application...');
 	spinner.start();
 
-	return fs.mkdirp(`${DST_CLIENT_DIR}`, () => {
+	return fs.mkdirp(`app/`, () => {
 		runSequence(
 			'clean:client',
-			'html:client',
-			'css:client', // @TODO - Refactor all CSS to SASS, then remove this.
+            'pullBootstrap:client',
+            'pullJQuery:client',
+            'sass:client',
 
 			() => {
 				spinner.stop();
-				console.log(chalk.yellow(`App built in ${DST_CLIENT_DIR}.`));
+				console.log(chalk.yellow(`App built in app/`));
 				gulp.src('package.json')
 					.pipe(notify({
 						title: 'Scoreboard build',
