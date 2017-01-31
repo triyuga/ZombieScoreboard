@@ -7,6 +7,7 @@ function nomnom() {
   })
     .done(function(res) {
       const data = res.data || {};
+
       updateScoreboard(data);
     })
     .fail(function( jqXHR, textStatus ) {
@@ -29,3 +30,6 @@ function nomnom() {
 
   // console.log('dispatchEvent: ' + randomEvent);
 }
+
+var interval = localStorage.getItem('interval');
+setInterval(nomnom, interval);

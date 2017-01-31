@@ -8,19 +8,19 @@ function updateScoreboard(data) {
         leaderBoard: data.leaderBoard || ["No Leaders"],
     };
 
-    $('#killCount').append( function() {
+    $('#killCount').html( function() {
         return stats.killCount.map(function(item){
-            return "<li>" + item + "</li>";
+            return "<li>" + item + Math.random() + "</li>";
         });
     });
 
-    $('#spellCount').append( function() {
+    $('#spellCount').html( function() {
         return stats.spellCount.map(function(item){
             return "<li>" + item + "</li>";
         });
     });
 
-    $('#leaderBoard').append( function() {
+    $('#leaderBoard').html( function() {
         return stats.leaderBoard.map(function(item){
             return "<li>" + item + "</li>";
         });
