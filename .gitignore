@@ -39,6 +39,7 @@ build
 out
 app/node_modules
 app/public
+app
 
 # vscode stuffs
 .vscode
