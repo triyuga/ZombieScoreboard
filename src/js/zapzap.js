@@ -6,7 +6,7 @@ $(document).ready(function() {
  *
  */
 function doTheZapZap() {
-  // doTheZapZap!
+  // doTheZapZap!f
   // console.log('doTheZapZap');
   var interval = Math.random() * (5000 - 2000) + 2000;
   var zapzapTimer = setTimeout(waitForTheZapZap, interval);
