@@ -1,5 +1,14 @@
 $(document).ready(function() {
     waitForTheZapZap();
+
+    // let stats = {
+    //     killCount: ["Mega Kill"],
+    //     spellCount: ["Super Nuke"],
+    //     leaderBoard: ["Death667b"],
+    // };
+    let stats = {};
+
+    updateScoreboard(stats);
 });
 
 /**
