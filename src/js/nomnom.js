@@ -6,7 +6,8 @@ function nomnom() {
     url: restURL,
   })
     .done(function(res) {
-      updateScoreboard(res.data);
+      const data = res.data || {};
+      updateScoreboard(data);
     })
     .fail(function( jqXHR, textStatus ) {
       // console.log('jqXHR');
