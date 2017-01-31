@@ -22,9 +22,14 @@ gulp.task('clean:client', () => {
 	return del([`app/**/*`]);
 });
 
-gulp.task('pullBootstrap:client', () => {
+gulp.task('pullBootstrapCSS:client', () => {
 	return gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css'])
 		.pipe(gulp.dest('app/css'));
+});
+
+gulp.task('pullBootstrapJS:client', () => {
+	return gulp.src(['node_modules/bootstrap/dist/js/bootstrap.min.js'])
+		.pipe(gulp.dest('app/js'));
 });
 
 gulp.task('pullJQuery:client', () => {
@@ -67,7 +72,8 @@ gulp.task('build', (done) => {
 	return fs.mkdirp(`app/`, () => {
 		runSequence(
 			'clean:client',
-            'pullBootstrap:client',
+            'pullBootstrapCSS:client',
+			'pullBootstrapJS:client',
             'pullJQuery:client',
             'sass:client',
             'copyJS:client',
