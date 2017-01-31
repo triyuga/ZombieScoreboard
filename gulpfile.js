@@ -32,6 +32,16 @@ gulp.task('pullJQuery:client', () => {
 		.pipe(gulp.dest('app/js'));
 });
 
+gulp.task('copyJS:client', () => {
+	return gulp.src(['src/js/**/*'])
+		.pipe(gulp.dest('app/js'));
+});
+
+gulp.task('copyHTML:client', () => {
+	return gulp.src(['src/*.html'])
+		.pipe(gulp.dest('app/'));
+});
+
 gulp.task('sass:client', () => {
 	return gulp.src([`src/sass/main.scss`])
 		.pipe(sass())
@@ -55,6 +65,8 @@ gulp.task('build', (done) => {
             'pullBootstrap:client',
             'pullJQuery:client',
             'sass:client',
+            'copyJS:client',
+            'copyHTML:client',
 
 			() => {
 				spinner.stop();
