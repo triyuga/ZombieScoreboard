@@ -7,9 +7,10 @@ $(document).ready(function() {
  */
 function doTheZapZap() {
   // doTheZapZap!
+  // console.log('doTheZapZap');
   var interval = Math.random() * (5000 - 2000) + 2000;
-  var zapzapTimer = setInterval(pauseZapzap, interval);
-  $("body").addClass("zapazap");
+  var zapzapTimer = setTimeout(waitForTheZapZap, interval);
+  $("body").addClass("zapzap");
 }
 
 /**
@@ -17,7 +18,8 @@ function doTheZapZap() {
  */
 function waitForTheZapZap() {
   // waitForTheZapZap!
-  var interval = Math.random() * (5000 - 2000) + 2000;
-  setInterval(doZapzap, interval);
-  $("body").removeClass("zapazap");
+  // console.log('waitForTheZapZap');
+  var interval = Math.random() * (7000 - 3000) + 3000;
+  setTimeout(doTheZapZap, interval);
+  $("body").removeClass("zapzap");
 }
