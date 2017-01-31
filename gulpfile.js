@@ -42,6 +42,11 @@ gulp.task('copyHTML:client', () => {
 		.pipe(gulp.dest('app/'));
 });
 
+gulp.task('copyImages:client', () => {
+	return gulp.src(['src/img/**/*'])
+		.pipe(gulp.dest('app/img'));
+});
+
 gulp.task('sass:client', () => {
 	return gulp.src([`src/sass/main.scss`])
 		.pipe(sass())
@@ -67,6 +72,7 @@ gulp.task('build', (done) => {
             'sass:client',
             'copyJS:client',
             'copyHTML:client',
+            'copyImages:client',
 
 			() => {
 				spinner.stop();
