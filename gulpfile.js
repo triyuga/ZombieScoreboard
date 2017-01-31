@@ -36,7 +36,7 @@ gulp.task('sass:client', () => {
 	return gulp.src([`src/sass/main.scss`])
 		.pipe(sass())
 		.pipe(cssnano())
-		.pipe(gulp.dest(`srv/css`));
+		.pipe(gulp.dest(`app/css`));
 });
 
 gulp.task('default', () => {
