@@ -1,29 +1,30 @@
 
-function updateScoreboard(data) {
-    console.log('data', data);
+function updateScoreboard(stats) {
+    // console.log('stats', stats);
 
-    let stats = {
-        killCount: data.killCount || ["Zero Kill"],
-        spellCount: data.spellCount || ["No Spell"],
-        leaderBoard: data.leaderBoard || ["No Leaders"],
-    };
-
-    $('#killCount').html( function() {
-        return stats.killCount.map(function(item){
-            return "<li>" + item + Math.random() + "</li>";
-        });
+    $('#killCount ul').html( function() {
+        var listItems = [];
+        for (var entityType in stats.killCount) {
+          listItems.push("<li><span class=\"slabel\">" + entityType + ":</span> <span class=\"stat\">" + stats.killCount[entityType] + "</span></li>");
+        }
+        return listItems.join("\n");
     });
 
-    $('#spellCount').html( function() {
-        return stats.spellCount.map(function(item){
-            return "<li>" + item + "</li>";
-        });
+    $('#spellCount ul').html( function() {
+        var listItems = [];
+        for (var spellName in stats.spellCount) {
+          listItems.push("<li><span class=\"slabel\">" + spellName + ":</span> <span class=\"stat\">" + stats.spellCount[spellName] + "</span></li>");
+        }
+        return listItems.join("\n");
     });
 
-    $('#leaderBoard').html( function() {
-        return stats.leaderBoard.map(function(item){
-            return "<li>" + item + "</li>";
-        });
+    $('#leaderBoard ul').html( function() {
+        var listItems = [];
+        for (var i = 0; i < stats.leaderBoard.length; i++) {
+            playerStats = stats.leaderBoard[i];
+            listItems.push("<li><h4>" + playerStats.playerName + "</h4><span class=\"slabel\">Score:</span> <span class=\"stat\">" + playerStats.totalEvents + "</span></li>");
+        }
+        return listItems.join("\n");
     });
 
 

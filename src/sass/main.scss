@@ -1,8 +1,11 @@
 // Variables
+@import '_fonts.scss';
 @import '_variables.scss';
 
 body {
   background-color: black;
+  position: relative;
+  overflow: hidden;
 }
 
 body.zapzap {
@@ -10,9 +13,49 @@ body.zapzap {
   background-size: 100% 100%;
 }
 
+body.faceeater {
+  background-image: url(../img/face_eater.gif);
+  background-size: 100% 100%;
+}
+
+.animated-zombie {
+  width: 140px;
+  height: 140px;
+  top: 30px;
+  left: 20px;
+  position: fixed;
+  background-image: url(../img/zombie_walk.gif);
+  background-image: url(../img/get_down_zombie.gif);
+  background-size: 100% 100%;
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  h1.title {
+    margin-top: 40px;
+    font-size: 68px;
+    .title--magikcraft {
+      color: $pukeGreen;
+    }
+    .title--zombie {
+      color: $pukeGreen;
+    }
+    .title--apocalyse {
+      color: $pukeGreen;
+    }
+  }
+}
+
 button.settings {
-  float: right;
-  margin-right: -101px;
+  position: fixed;
+  top: 40px;
+  right: 30px;
+  background-image: url(../img/config.png);
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
 }
 
 .disp-list {
@@ -24,3 +67,78 @@ button.settings {
    font-size: 1.5em;
    font-weight: 700;
  }
+
+.scoreboard {
+  text-align: center;
+  #leaderBoard {
+    h3 {
+      color: deepskyblue;
+    }
+  }
+  #killCount {
+    h3 {
+      color: red;
+    }
+  }
+  #spellCount {
+    h3 {
+      color: green;
+    }
+  }
+
+  .col {
+    ul {
+      list-style: none;
+      font-size: 1.2em;
+      li {
+        list-style-type: none;
+        padding: 10px 0;
+        h4 {
+          color: purple;
+        }
+        .slabel {
+          color: blue;
+        }
+        .stat {
+          color: yellow;
+        }
+      }
+    }
+  }
+}
+
+.feature-graphic {
+  // width: 100%;
+  margin-top: 30px;
+}
+
+.feature-graphic.hidden {
+  // display: none;
+}
+
+.feature-graphic--1 {
+  width: 150px;
+  height: 220px;
+  background-image: url(../img/deal_with_it.gif);
+  background-color: #999;
+  background-size: 100%;
+  margin: 0 auto;
+}
+.feature-graphic--2 {
+  background-image: url(../img/mob_party.gif);
+  width: 100%;
+  background-size: 100%;
+  height: 200px;
+  opacity: 0.7;
+}
+.feature-graphic--3 {
+  // background-image: url(../img/zombie_step.gif);
+  background-image: url(../img/surfer_zombie.gif);
+  width: 250px;
+  background-size: 100%;
+  height: 250px;
+  margin: 0 auto;
+  opacity: 0.7;
+}
+
+
