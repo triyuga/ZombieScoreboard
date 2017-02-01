@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $("body").addClass("zapzap");
     setTimeout(waitForTheZapZap, interval);
+    // $(".feature-graphic").addClass("revealed");
 });
 
 /**
@@ -25,11 +26,9 @@ function doTheZapZap() {
 
     // Show random feature graphic, if turned on.
     var showFeatureGraphics = localStorage.getItem('showFeatureGraphics');
-    console.log('showFeatureGraphics');
-    console.log(showFeatureGraphics);
     if (showFeatureGraphics !== 'false') {
       var unhide = Math.floor((Math.random() * 3) + 1);
-      $(".feature-graphic--" + unhide).removeClass("hidden");
+      $(".feature-graphic--" + unhide).addClass("revealed");
     }
   }
 }
@@ -44,5 +43,5 @@ function waitForTheZapZap() {
   setTimeout(doTheZapZap, interval);
   $("body").removeClass("zapzap");
   $("body").removeClass("faceeater");
-  $(".feature-graphic").addClass("hidden");
+  $(".feature-graphic").removeClass("revealed");
 }

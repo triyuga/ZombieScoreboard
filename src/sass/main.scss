@@ -34,15 +34,21 @@ body.faceeater {
   text-align: center;
   h1.title {
     margin-top: 40px;
-    font-size: 68px;
+    font-size: 66px;
     .title--magikcraft {
-      color: $pukeGreen;
+      color: #666;
+      .m {
+        color: red;
+        font-size: 1.2em;
+      }
     }
     .title--zombie {
       color: $pukeGreen;
+      font-size: 1.2em;
     }
-    .title--apocalyse {
+    .title--apocalypse {
       color: $pukeGreen;
+      // color: #555;
     }
   }
 }
@@ -82,24 +88,26 @@ button.settings {
   }
   #spellCount {
     h3 {
-      color: green;
+      color: $fluroGreen;
     }
   }
 
   .col {
+    position: relative;
     ul {
       list-style: none;
       font-size: 1.2em;
       li {
         list-style-type: none;
-        padding: 10px 0;
+        padding: 5px 0;
         h4 {
-          color: purple;
+          color: $lightPurple;
         }
         .slabel {
-          color: blue;
+          color: $colbateBlue;
         }
         .stat {
+          font-size: 1.3em;
           color: yellow;
         }
       }
@@ -108,12 +116,11 @@ button.settings {
 }
 
 .feature-graphic {
-  // width: 100%;
-  margin-top: 30px;
+  display: none
 }
 
-.feature-graphic.hidden {
-  // display: none;
+.feature-graphic.revealed {
+  display: block;
 }
 
 .feature-graphic--1 {
@@ -123,8 +130,13 @@ button.settings {
   background-color: #999;
   background-size: 100%;
   margin: 0 auto;
+
+  position: absolute;
+  top: 100px;
+  left: -70px
 }
 .feature-graphic--2 {
+  margin-top: 30px;
   background-image: url(../img/mob_party.gif);
   width: 100%;
   background-size: 100%;
@@ -132,13 +144,24 @@ button.settings {
   opacity: 0.7;
 }
 .feature-graphic--3 {
-  // background-image: url(../img/zombie_step.gif);
+  margin-top: 30px;
   background-image: url(../img/surfer_zombie.gif);
   width: 250px;
   background-size: 100%;
   height: 250px;
   margin: 0 auto;
   opacity: 0.7;
+}
+
+.azure-logo {
+  width: 300px;
+  height: 100px;
+  background-size: 100%;
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  margin-left: -150px;
+  background-image: url(../img/poweredby_microsoft_azure.png);
 }
 
 

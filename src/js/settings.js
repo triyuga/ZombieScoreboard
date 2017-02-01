@@ -12,13 +12,16 @@ var showFeatureGraphics = localStorage.getItem('showFeatureGraphics') ? (localSt
 localStorage.setItem('showFeatureGraphics', showFeatureGraphics);
 $('#showFeatureGraphics').prop('checked', showFeatureGraphics);
 
+var showAzureLogo = (localStorage.getItem('showAzureLogo') === 'false') ? false : true;
+localStorage.setItem('showAzureLogo', showFeatureGraphics);
+$('#showAzureLogo').prop('checked', showAzureLogo);
+
 function saveSettings() {
   localStorage.setItem('interval', $('#interval').val());
   localStorage.setItem('restURL', $('#restURL').val());
   localStorage.setItem('eventTypeJSONs', $('#eventTypeJSONs').val());
-  console.log('#showFeatureGraphics');
-  console.log($('#showFeatureGraphics').val());
   localStorage.setItem('showFeatureGraphics', $('#showFeatureGraphics').is(":checked"));
+  localStorage.setItem('showAzureLogo', $('#showAzureLogo').is(":checked"));
   window.location.reload();
 }
 
@@ -27,5 +30,10 @@ function resetSettings() {
   localStorage.removeItem('restURL');
   localStorage.removeItem('eventTypeJSONs');
   localStorage.removeItem('showFeatureGraphics');
+  localStorage.removeItem('showAzureLogo');
   window.location.reload();
+}
+
+if (showAzureLogo) {
+  $('.azure-logo').removeClass('hidden');
 }
