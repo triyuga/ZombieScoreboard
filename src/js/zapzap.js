@@ -25,7 +25,7 @@ function doTheZapZap() {
     $("body").addClass("zapzap");
 
     // Show random feature graphic, if turned on.
-    var showFeatureGraphics = localStorage.getItem('showFeatureGraphics');
+    var showFeatureGraphics = localStorage.getItem('showFeatureGraphics');1
     if (showFeatureGraphics !== 'false') {
       var unhide = Math.floor((Math.random() * 3) + 1);
       $(".feature-graphic--" + unhide).addClass("revealed");

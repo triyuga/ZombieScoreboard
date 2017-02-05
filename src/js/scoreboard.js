@@ -26,6 +26,4 @@ function updateScoreboard(stats) {
         }
         return listItems.join("\n");
     });
-
-
 }

@@ -8,7 +8,7 @@ var restURL = localStorage.getItem('restURL') ? localStorage.getItem('restURL') 
 localStorage.setItem('restURL', restURL);
 $('#restURL').val(restURL);
 
-var showFeatureGraphics = localStorage.getItem('showFeatureGraphics') ? (localStorage.getItem('showFeatureGraphics') !== 'false') : false;
+var showFeatureGraphics = (localStorage.getItem('showFeatureGraphics') === 'false') ? false : true;
 localStorage.setItem('showFeatureGraphics', showFeatureGraphics);
 $('#showFeatureGraphics').prop('checked', showFeatureGraphics);
 
