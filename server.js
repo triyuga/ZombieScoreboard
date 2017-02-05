@@ -120,7 +120,7 @@ app.use(function (req, res, next) {
 app.get('/eat', function (req, res) {
 	let data;
 	if (req.body.eventType === "playerCastSpell") {
-		if (req.body.spellName !== "fulmen" || req.body.spellName !== "ignifera")) {
+		if (req.body.spellName !== "fulmen" || req.body.spellName !== "ignifera") {
 			return res.json({ok: true, msg: "Not logging this spell"});
 		} else {
 			data = {
