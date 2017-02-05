@@ -117,7 +117,7 @@ app.use(function (req, res, next) {
 // });
 
 // Consumes data from mock emitter.
-app.get('/eat', function (req, res) {
+app.post('/eat', function (req, res) {
 	let data;
 	if (req.body.eventType === "playerCastSpell") {
 		if (req.body.spellName !== "fulmen" || req.body.spellName !== "ignifera") {
