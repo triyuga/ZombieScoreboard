@@ -3,7 +3,7 @@ var interval = localStorage.getItem('interval') ? localStorage.getItem('interval
 localStorage.setItem('interval', interval);
 $('#interval').val(interval);
 
-var defaultRestURL = 'http://localhost:8666/stats';
+var defaultRestURL = 'http://zombie.magikcraft.io:8666/stats';
 var restURL = localStorage.getItem('restURL') ? localStorage.getItem('restURL') : defaultRestURL;
 localStorage.setItem('restURL', restURL);
 $('#restURL').val(restURL);
