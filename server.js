@@ -140,7 +140,7 @@ app.post('/eat', function (req, res) {
 	if (typeof data === "undefined") {
 		return res.json({ok: true, msg: "Not logging this"});
 	}
-	store.push(req.body);
+	store.push(data);
 	console.log('store');
 	console.log(data);
 	res.json({
