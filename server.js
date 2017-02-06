@@ -117,17 +117,13 @@ app.use(function (req, res, next) {
 // });
 
 // Consumes data from mock emitter.
-app.get('/eat', function (req, res) {
+app.post('/eat', function (req, res) {
 	let data;
 	if (req.body.eventType === "playerCastSpell") {
-		if (req.body.spellName !== "fulmen" || req.body.spellName !== "ignifera")) {
-			return res.json({ok: true, msg: "Not logging this spell"});
-		} else {
-			data = {
-				spellName: req.body.spellName,
-				playerName: req.body.playerName,
-				eventType: req.body.eventType
-			}
+		data = {
+			spellName: req.body.spellName,
+			playerName: req.body.playerName,
+			eventType: req.body.eventType
 		}
 	}
 	if (req.body.eventType === "playerKilledEntity") {
@@ -138,9 +134,9 @@ app.get('/eat', function (req, res) {
 		}
 	}
 	if (typeof data === "undefined") {
-		return res.json({ok: true, msg: "Not logging this"});
+		return res.json({ok: true, msg: "No data", query: req.body});
 	}
-	store.push(req.body);
+	store.push(data);
 	console.log('store');
 	console.log(data);
 	res.json({
