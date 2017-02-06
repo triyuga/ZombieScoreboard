@@ -16,7 +16,7 @@ function getPlayerStats() {
 
 function iterateStats(event) {
 	// Ensure event has playerName.
-	if (event.playerName.length === 0 || typeof(event.playerName) === "undefined") {
+	if (typeof(event.playerName) === "undefined" || event.playerName.length === 0) {
 		if (event.eventType === "playerKilledEntity") {
 			event.playerName = getRandomPlayerNameFromRecentSpells();
 		}
