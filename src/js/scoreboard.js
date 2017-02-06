@@ -1,6 +1,6 @@
 
 function updateScoreboard(stats) {
-    // console.log('stats', stats);
+    console.log('stats', stats);
 
     $('#killCount ul').html( function() {
         var listItems = [];

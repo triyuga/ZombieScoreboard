@@ -2,94 +2,142 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
-var store = [];
+var recentSpells = []; // Tracks recent spells for fudge-assignment of kill events to a player.
+var playerStats = {};
 
-function getStats() {
+function getPlayerStats() {
 	var stats = {
-		killCount: {}, // entityType: int
-		spellCount: {}, // spellName: int
-		leaderBoard: [], // [ { playerName: stats } ]
+		leaderBoard: getLeaderBoard(),
+		killCount: getKillCounts(),
+		spellCount: getSpellCounts(),
 	};
-
-	var playerStats = {};
-
-	store.map(function (event) {
-		console.log(event);
-		switch (event.eventType) {
-			case "playerKilledEntity":
-				// killCount
-				var entityType = event.entityType;
-				if (!stats.killCount[entityType]) {
-					stats.killCount[entityType] = 0;
-				}
-				stats.killCount[entityType]++;
-
-				// playerStats
-				var playerName = event.playerName;
-				if (!playerStats[playerName]) {
-					// if (!playerStats[playerName]) {
-					playerStats[playerName] = {
-						spellCount: {},
-						killCount: {},
-						totalSpells: 0,
-						totalKills: 0,
-						totalEvents: 0
-					};
-				}
-				if (!playerStats[playerName].killCount[entityType]) {
-					playerStats[playerName].killCount[entityType] = 0;
-				}
-				playerStats[playerName].killCount[entityType]++;
-				playerStats[playerName].totalKills++;
-				playerStats[playerName].totalEvents++;
-				break;
-
-			case "playerCastSpell":
-				// spellCount
-				var spellName = event.spellName;
-				if (!stats.spellCount[spellName]) {
-					stats.spellCount[spellName] = 0;
-				}
-				stats.spellCount[spellName]++;
-
-				// playerStats
-				var playerName = event.playerName;
-				if (!playerStats[playerName]) {
-					playerStats[playerName] = {
-						spellCount: {},
-						killCount: {},
-						totalSpells: 0,
-						totalKills: 0,
-						totalEvents: 0
-					};
-				}
-				if (!playerStats[playerName].spellCount[spellName]) {
-					playerStats[playerName].spellCount[spellName] = 0;
-				}
-				playerStats[playerName].spellCount[spellName]++;
-				playerStats[playerName].totalSpells++;
-				playerStats[playerName].totalEvents++;
-				break;
-
-		}
-	});
-
-	for (var playerName in playerStats) {
-		playerStats[playerName].playerName = playerName;
-		stats.leaderBoard.push(playerStats[playerName]);
-	}
-
-	stats.leaderBoard.sort(sortPlayerStats);
-
 	return stats;
 }
 
+function iterateStats(event) {
+	// Ensure event has playerName.
+	if (event.playerName.length === 0 || typeof(event.playerName) === "undefined") {
+		if (event.eventType === "playerKilledEntity") {
+			event.playerName = getRandomPlayerNameFromRecentSpells();
+		}
+
+		if (!event.playerName || typeof(event.playerName) === null) {
+			event.playerName = "GOD";
+		}
+	}
+	var playerName = event.playerName;
+
+	// Ensure playerStats[playerName] is initialized.
+	if (!playerStats[playerName]) {
+		playerStats[playerName] = {
+			playerName: playerName, // need this later.
+			spells: {},
+			kills: {},
+			totalSpells: 0,
+			totalKills: 0,
+			totalEvents: 0
+		};
+	}
+
+	console.log(event);
+	switch (event.eventType) {
+		case "playerKilledEntity":
+			// Ensure playerStats[playerName].kills[entityType] is initialized.
+			if (!playerStats[playerName].kills[event.entityType]) {
+				playerStats[playerName].kills[event.entityType] = 0;
+			}
+			playerStats[playerName].kills[event.entityType]++;
+			playerStats[playerName].totalKills++;
+			playerStats[playerName].totalEvents++;
+			break;
+
+		case "playerCastSpell":
+			addSpellToRecentSpells(event);
+			// Ensure playerStats[playerName].kills[entityType] is initialized.
+			if (!playerStats[playerName].spells[event.spellName]) {
+				playerStats[playerName].spells[event.spellName] = 0;
+			}
+			playerStats[playerName].spells[event.spellName]++;
+			playerStats[playerName].totalSpells++;
+			playerStats[playerName].totalEvents++;
+			break;
+	}
+}
+
+/**
+ *
+ */
+function getSpellCounts() {
+	var spellCounts = {};
+	for (var playerName in playerStats) {
+		for (var spellName in playerStats[playerName].spells) {
+			if (!spellCounts[spellName]) {
+				spellCounts[spellName] = 0;
+			}
+			spellCounts[spellName] += playerStats[playerName].spells[spellName];
+		}
+	}
+	return spellCounts;
+}
+
+/**
+ *
+ */
+function getKillCounts() {
+	var killCounts = {};
+	for (var playerName in playerStats) {
+		for (var entityType in playerStats[playerName].kills) {
+			if (!killCounts[entityType]) {
+				killCounts[entityType] = 0;
+			}
+			killCounts[entityType] += playerStats[playerName].kills[entityType];
+		}
+	}
+	return killCounts;
+}
+
+/**
+ *
+ */
+function getLeaderBoard() {
+	var leaderBoard = [];
+	for (var playerName in playerStats) {
+		leaderBoard.push(playerStats[playerName]);
+	}
+	return leaderBoard.sort(sortPlayerStats);
+}
+
+/**
+ *
+ */
 function sortPlayerStats(a, b) {
 	if (a.totalEvents > b.totalEvents)
 		return -1;
 	if (a.totalEvents < b.totalEvents)
 		return 1;
 	return 0;
+}
+
+/**
+ *
+ */
+function getRandomPlayerNameFromRecentSpells() {
+	if (recentSpells.length === 0) {
+		return null;
+	}
+
+	var spellEvent = recentSpells[Math.floor(Math.random() * recentSpells.length)];
+	return spellEvent.playerName;
+}
+
+/**
+ *
+ */
+function addSpellToRecentSpells(event) {
+	if (recentSpells.length >= 5) {
+		recentSpells.splice(-1,1);
+	}
+	recentSpells.unshift(event);
 }
 
 app.use(bodyParser.json());
@@ -116,32 +164,70 @@ app.use(function (req, res, next) {
 //   next();
 // });
 
+function validateEvent(event) {
+	if (event.eventType === "playerCastSpell") {
+		if (typeof(event.spellName) === 'undefined' ) {
+			return false;
+		}
+		if (event.spellName.length === 0) {
+			return false;
+		}
+
+		if (typeof(event.playerName) === 'undefined' ) {
+			return false;
+		}
+		if (event.playerName.length === 0) {
+			return false;
+		}
+
+		return true;
+	}
+
+	if (event.eventType === "playerKilledEntity") {
+		if (typeof(event.entityType) === 'undefined' ) {
+			return false;
+		}
+		if (event.entityType.length === 0) {
+			return false;
+		}
+
+		// playerName validation skipped for now.
+
+		return true;
+	}
+}
+
 // Consumes data from mock emitter.
 app.post('/eat', function (req, res) {
-	let data;
-	if (req.body.eventType === "playerCastSpell") {
-		data = {
-			spellName: req.body.spellName,
-			playerName: req.body.playerName,
-			eventType: req.body.eventType
-		}
+	var event = {};
+	// Support data keyed under req.body OR under req.query.
+	if (req.body && Object.keys(req.body).length !== 0) {
+		event = req.body;
 	}
-	if (req.body.eventType === "playerKilledEntity") {
-		data = {
-			eventType: req.body.eventType,
-			entityType: victim,
-			playerName: victim.killer
-		}
+	else if (req.query && Object.keys(req.query).length !== 0) {
+		event = req.query;
 	}
-	if (typeof data === "undefined") {
-		return res.json({ok: true, msg: "No data", query: req.body});
+
+	console.log('event');
+	console.log(event);
+
+	var isValid = validateEvent(event);
+	if (!isValid) {
+		return res.json({
+			ok: true,
+			msg: "yuck! invalid event",
+			event: event
+		});
 	}
-	store.push(data);
-	console.log('store');
-	console.log(data);
-	res.json({
-		msg: 'Nom nom!',
-		query: data
+
+	iterateStats(event);
+
+	return res.json({
+		ok: true,
+		msg: "nomnom",
+		event: event,
+		playerStats: playerStats,
+		recentSpells: recentSpells
 	});
 });
 
@@ -157,7 +243,15 @@ app.get('/store', function (req, res) {
 app.get('/stats', function (req, res) {
 	res.json({
 		msg: 'Whos who!',
-		data: getStats()
+		data: getPlayerStats()
+	});
+});
+
+// Serves data collected from mock emitter.
+app.get('/playerStats', function (req, res) {
+	res.json({
+		msg: 'playerStats',
+		data: playerStats
 	});
 });
 
