@@ -24,17 +24,18 @@ function getPlayerStats() {
  *
  */
 function iterateStats(event) {
+	var playerName = event.playerName;
 	// Ensure event has playerName.
-	if (typeof(event.playerName) === "undefined" || typeof(event.playerName) === null || event.playerName.length === 0) {
+	if (typeof(playerName) === "undefined" || typeof(playerName) === null || playerName.length === 0) {
 		if (event.eventType === "playerKilledEntity") {
-			event.playerName = getRandomPlayerNameFromRecentSpells();
+			playerName = getRandomPlayerNameFromRecentSpells();
 		}
 
-		if (!event.playerName || typeof(event.playerName) === null) {
-			event.playerName = "GOD";
+		if (!playerName || typeof(playerName) === null) {
+			playerName = "GOD";
 		}
 	}
-	var playerName = event.playerName;
+
 
 	// Ensure playerStats[playerName] is initialized.
 	if (!playerStats[playerName]) {
@@ -169,14 +170,9 @@ function validateEvent(event) {
 		if (event.spellName.length === 0) {
 			return false;
 		}
-
-		if (typeof(event.playerName) === 'undefined' ) {
+		if (typeof(event.playerName) === "undefined" || typeof(event.playerName) === null || event.playerName.length === 0) {
 			return false;
 		}
-		if (event.playerName.length === 0) {
-			return false;
-		}
-
 		return true;
 	}
 
