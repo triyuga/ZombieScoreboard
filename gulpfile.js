@@ -67,7 +67,7 @@ gulp.task('sass:client', () => {
 });
 
 gulp.task('default', () => {
-	runSequence('build', 'watch', 'server');
+	runSequence('build', 'watch');
 });
 
 gulp.task('build', (done) => {
