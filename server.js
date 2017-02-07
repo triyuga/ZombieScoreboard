@@ -143,6 +143,15 @@ function getRandomPlayerNameFromRecentSpells() {
  *
  */
 function addSpellToRecentSpells(event) {
+	if (event.eventType !== "playerCastSpell") {
+		return;
+	}
+
+	// If not attack spell, skip.
+	if (event.spellName !== "fulmen" && event.spellName !== "ignifera") {
+		return;
+	}
+
 	if (recentSpells.length >= recentSpellsLogCount) {
 		recentSpells.splice(-1,1);
 	}
@@ -221,9 +230,6 @@ app.post('/eat', function (req, res) {
 	else if (req.query && Object.keys(req.query).length !== 0) {
 		event = req.query;
 	}
-
-	// console.log('event');
-	// console.log(event);
 
 	var isValid = validateEvent(event);
 	if (!isValid) {
