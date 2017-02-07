@@ -25,7 +25,7 @@ function getPlayerStats() {
  */
 function iterateStats(event) {
 	// Ensure event has playerName.
-	if (typeof(event.playerName) === "undefined" || event.playerName.length === 0) {
+	if (typeof(event.playerName) === "undefined" || typeof(event.playerName) === null || event.playerName.length === 0) {
 		if (event.eventType === "playerKilledEntity") {
 			event.playerName = getRandomPlayerNameFromRecentSpells();
 		}
@@ -48,7 +48,6 @@ function iterateStats(event) {
 		};
 	}
 
-	console.log(event);
 	switch (event.eventType) {
 		case "playerKilledEntity":
 			// Ensure playerStats[playerName].kills[entityType] is initialized.
@@ -152,7 +151,7 @@ function addSpellToRecentSpells(event) {
 /**
  *
  */
-function addEventToRecentEvents(event) {
+function logEventToRecentEvents(event) {
 	if (recentEvents.length >= recentEventsLogCount) {
 		recentEvents.splice(-1,1);
 	}
@@ -227,8 +226,8 @@ app.post('/eat', function (req, res) {
 		event = req.query;
 	}
 
-	console.log('event');
-	console.log(event);
+	// console.log('event');
+	// console.log(event);
 
 	var isValid = validateEvent(event);
 	if (!isValid) {
@@ -239,21 +238,18 @@ app.post('/eat', function (req, res) {
 		});
 	}
 
-	addEventToRecentEvents(event);
+	logEventToRecentEvents(event);
 	iterateStats(event);
 
 	return res.json({
 		ok: true,
 		msg: "nomnom",
-		// event: event,
-		// playerStats: playerStats,
-		// recentSpells: recentSpells
 	});
 });
 
 // Serves data collected from mock emitter.
 app.get('/stats', function (req, res) {
-	res.json({
+	return res.json({
 		msg: 'Whos who!',
 		data: getPlayerStats()
 	});
@@ -261,7 +257,7 @@ app.get('/stats', function (req, res) {
 
 // Serves data collected from mock emitter.
 app.get('/playerStats', function (req, res) {
-	res.json({
+	return res.json({
 		msg: 'playerStats',
 		data: playerStats
 	});
@@ -269,7 +265,7 @@ app.get('/playerStats', function (req, res) {
 
 // Serves recentEvents.
 app.get('/recentEvents', function (req, res) {
-	res.json({
+	return res.json({
 		msg: 'recentEvents',
 		data: recentEvents
 	});
@@ -277,7 +273,7 @@ app.get('/recentEvents', function (req, res) {
 
 // Serves recentSpells.
 app.get('/recentSpells', function (req, res) {
-	res.json({
+	return res.json({
 		msg: 'recentSpells',
 		data: recentSpells
 	});
@@ -290,7 +286,7 @@ app.get('/reset', function (req, res) {
 	recentEvents = [];
 	recentSpells = [];
 	playerStats = {};
-	res.json({
+	return res.json({
 		msg: 'Reset!',
 	});
 });
