@@ -2,9 +2,15 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
+var recentEvents = [];
+var recentEventsLogCount = 20;
 var recentSpells = []; // Tracks recent spells for fudge-assignment of kill events to a player.
+var recentSpellsLogCount = 5;
 var playerStats = {};
 
+/**
+ *
+ */
 function getPlayerStats() {
 	var stats = {
 		leaderBoard: getLeaderBoard(),
@@ -14,6 +20,9 @@ function getPlayerStats() {
 	return stats;
 }
 
+/**
+ *
+ */
 function iterateStats(event) {
 	// Ensure event has playerName.
 	if (typeof(event.playerName) === "undefined" || event.playerName.length === 0) {
@@ -134,36 +143,25 @@ function getRandomPlayerNameFromRecentSpells() {
  *
  */
 function addSpellToRecentSpells(event) {
-	if (recentSpells.length >= 5) {
+	if (recentSpells.length >= recentSpellsLogCount) {
 		recentSpells.splice(-1,1);
 	}
 	recentSpells.unshift(event);
 }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
-
-app.use(function (req, res, next) {
-	res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');
-	res.header('Access-Control-Allow-Credentials', 'true');
-	res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-	res.header('Access-Control-Expose-Headers', 'Content-Length');
-	res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
-	if (req.method === 'OPTIONS') {
-		return res.send(200);
-	} else {
-		return next();
+/**
+ *
+ */
+function addEventToRecentEvents(event) {
+	if (recentEvents.length >= recentEventsLogCount) {
+		recentEvents.splice(-1,1);
 	}
-});
+	recentEvents.unshift(event);
+}
 
-// app.all('/', function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   next();
-// });
-
+/**
+ *
+ */
 function validateEvent(event) {
 	if (event.eventType === "playerCastSpell") {
 		if (typeof(event.spellName) === 'undefined' ) {
@@ -197,6 +195,27 @@ function validateEvent(event) {
 	}
 }
 
+/**
+ *
+ */
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+
+app.use(function (req, res, next) {
+	res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');
+	res.header('Access-Control-Allow-Credentials', 'true');
+	res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+	res.header('Access-Control-Expose-Headers', 'Content-Length');
+	res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
+	if (req.method === 'OPTIONS') {
+		return res.send(200);
+	} else {
+		return next();
+	}
+});
+
 // Consumes data from mock emitter.
 app.post('/eat', function (req, res) {
 	var event = {};
@@ -220,22 +239,15 @@ app.post('/eat', function (req, res) {
 		});
 	}
 
+	addEventToRecentEvents(event);
 	iterateStats(event);
 
 	return res.json({
 		ok: true,
 		msg: "nomnom",
-		event: event,
-		playerStats: playerStats,
-		recentSpells: recentSpells
-	});
-});
-
-// Serves data collected from mock emitter.
-app.get('/store', function (req, res) {
-	res.json({
-		msg: 'Eat Suck Suckface!',
-		data: store
+		// event: event,
+		// playerStats: playerStats,
+		// recentSpells: recentSpells
 	});
 });
 
@@ -255,16 +267,36 @@ app.get('/playerStats', function (req, res) {
 	});
 });
 
-// Clears data from the store.
-app.get('/dumpit', function (req, res) {
-	store = [];
+// Serves recentEvents.
+app.get('/recentEvents', function (req, res) {
 	res.json({
-		msg: 'Ahhhmazing dump!',
+		msg: 'recentEvents',
+		data: recentEvents
+	});
+});
+
+// Serves recentSpells.
+app.get('/recentSpells', function (req, res) {
+	res.json({
+		msg: 'recentSpells',
+		data: recentSpells
+	});
+});
+
+/**
+ * Clears data from the store.
+ */
+app.get('/reset', function (req, res) {
+	recentEvents = [];
+	recentSpells = [];
+	playerStats = {};
+	res.json({
+		msg: 'Reset!',
 	});
 });
 
 app.use(express.static('app/'));
 
 app.listen(8666, function () {
-	console.log('Example app listening on port 8666!')
+	console.log('Example app listening on port 8666!');
 });
