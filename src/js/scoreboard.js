@@ -8,6 +8,7 @@ function updateScoreboard(stats) {
         var listItems = [];
         for (var entityType in stats.killCount) {
           var entityTypeLabel = entityType.replace("Craft", "");
+          var entityTypeLabel = entityTypeLabel.split('{')[0];
           var count = stats.killCount[entityType];
           listItems.push("<li><span class=\"slabel\">" + entityTypeLabel + ":</span> <span class=\"stat\">" + count + "</span></li>");
         }
