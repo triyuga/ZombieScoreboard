@@ -1,10 +1,10 @@
-FROM sitapati/docker-alpine-node-python-make
+FROM sitapati/docker-ubuntu-node-speedus
 
 WORKDIR /build
 ADD . .
 
 RUN npm i \
-  && node node_modules/gulp/bin/gulp.js build 
+  && node node_modules/gulp/bin/gulp.js build
 
 EXPOSE 8666
-CMD ["node", "server.js"]
+CMD ["speedus", "node", "server.js"]
