@@ -17,6 +17,7 @@ function getPlayerStats() {
 		killCount: getKillCounts(),
 		spellCount: getSpellCounts(),
 	};
+
 	return stats;
 }
 
@@ -240,6 +241,12 @@ app.post('/eat', function (req, res) {
 		});
 	}
 
+	// console.log() gets picked up Gandelf, and shipped put via UDP.
+	console.log({
+		type: 'event',
+		data: event,
+	});
+
 	logEventToRecentEvents(event);
 	iterateStats(event);
 
@@ -251,9 +258,17 @@ app.post('/eat', function (req, res) {
 
 // Serves data collected from mock emitter.
 app.get('/stats', function (req, res) {
+	var playerStats = getPlayerStats();
+
+	// console.log() gets picked up Gandelf, and shipped put via UDP.
+	console.log({
+		type: 'playerStats',
+		data: playerStats,
+	});
+
 	return res.json({
 		msg: 'Whos who!',
-		data: getPlayerStats()
+		data: playerStats
 	});
 });
 
