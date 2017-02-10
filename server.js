@@ -242,10 +242,10 @@ app.post('/eat', function (req, res) {
 	}
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
-	console.log(JSON.stringify({
-		type: 'event',
-		data: event,
-	}));
+	// console.log(JSON.stringify({
+	// 	type: 'event',
+	// 	data: event,
+	// }));
 
 	logEventToRecentEvents(event);
 	iterateStats(event);
@@ -257,12 +257,12 @@ app.post('/eat', function (req, res) {
 });
 
 // Serves data collected from mock emitter.
-app.get('/stats', function (req, res) {
+app.get('/scoreboard', function (req, res) {
 	var playerStats = getPlayerStats();
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
 	console.log(JSON.stringify({
-		type: 'playerStats',
+		type: 'scoreboard',
 		data: playerStats,
 	}));
 
