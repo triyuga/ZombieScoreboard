@@ -78,7 +78,7 @@ function getScoreboard() {
 function iterateStats(event) {
 	var playerName = event.playerName;
 	// Ensure event has playerName.
-	if (!playerName || playerName.length === 0) {
+	if (typeof(playerName) === "undefined" || typeof(playerName) === null || !playerName || playerName.length === 0) {
 		if (event.eventType === "playerKilledEntity") {
 			playerName = getRandomPlayerNameFromRecentSpells();
 		}
@@ -293,10 +293,10 @@ app.post('/eat', function (req, res) {
 	}
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
-	// console.log(JSON.stringify({
-	// 	type: 'event',
-	// 	data: event,
-	// }));
+	console.log(JSON.stringify({
+		type: 'event',
+		data: event,
+	}));
 
 	// Main action.
 	logEventToRecentEvents(event);
@@ -319,10 +319,10 @@ app.get('/scoreboard', function (req, res) {
 	var scoreboard = getScoreboard();
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
-	// console.log(JSON.stringify({
-	// 	type: 'scoreboard',
-	// 	data: scoreboard,
-	// }));
+	console.log(JSON.stringify({
+		type: 'scoreboard',
+		data: scoreboard,
+	}));
 
 	return res.json({
 		msg: 'Whos who!',
@@ -365,7 +365,6 @@ app.get('/reset', function (req, res) {
 		msg: 'Reset!',
 	});
 });
-
 
 /**
  *
