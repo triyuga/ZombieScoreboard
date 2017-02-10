@@ -242,10 +242,10 @@ app.post('/eat', function (req, res) {
 	}
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
-	// console.log(JSON.stringify({
-	// 	type: 'event',
-	// 	data: event,
-	// }));
+	console.log(JSON.stringify({
+		type: 'event',
+		data: event,
+	}));
 
 	logEventToRecentEvents(event);
 	iterateStats(event);
