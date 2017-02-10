@@ -11,14 +11,14 @@ var playerStats = {};
 /**
  *
  */
-function getPlayerStats() {
-	var stats = {
+function getScoreboard() {
+	var scoreboard = {
 		leaderBoard: getLeaderBoard(),
 		killCount: getKillCounts(),
 		spellCount: getSpellCounts(),
 	};
 
-	return stats;
+	return scoreboard;
 }
 
 /**
@@ -258,17 +258,17 @@ app.post('/eat', function (req, res) {
 
 // Serves data collected from mock emitter.
 app.get('/scoreboard', function (req, res) {
-	var playerStats = getPlayerStats();
+	var scoreboard = getScoreboard();
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
 	console.log(JSON.stringify({
 		type: 'scoreboard',
-		data: playerStats,
+		data: scoreboard,
 	}));
 
 	return res.json({
 		msg: 'Whos who!',
-		data: playerStats
+		data: scoreboard
 	});
 });
 
