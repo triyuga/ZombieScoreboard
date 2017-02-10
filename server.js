@@ -10,7 +10,7 @@ var playerStats = {};
 
 var throughputLogging = true;
 var throughputTimer = null;
-var eventCountLastSecond = 0
+var eventCountLastSecond = 0;
 var throughputCounter = [];
 var throughputCounterLimit = 600; // 10 mins
 
@@ -30,7 +30,7 @@ function startThroughputLogging() {
 		},
 		1000
 	);
-};
+}
 
 function throughputStats() {
 	var stats = {};
@@ -54,9 +54,9 @@ function throughputIntervalCount(interval) {
 	var count = 0;
 	var intervalEvents = throughputCounter.slice(Math.max(throughputCounter.length - interval, 1));
 	for (var i = 0; i < intervalEvents.length; i++) {
-	   count += intervalEvents[i];
+		count += intervalEvents[i];
 	}
-	return count
+	return count;
 }
 
 /**
@@ -78,7 +78,7 @@ function getScoreboard() {
 function iterateStats(event) {
 	var playerName = event.playerName;
 	// Ensure event has playerName.
-	if (typeof(playerName) === "undefined" || typeof(playerName) === null || playerName.length === 0) {
+	if (!playerName || playerName.length === 0) {
 		if (event.eventType === "playerKilledEntity") {
 			playerName = getRandomPlayerNameFromRecentSpells();
 		}
