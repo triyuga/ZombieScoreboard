@@ -8,6 +8,57 @@ var recentSpells = []; // Tracks recent spells for fudge-assignment of kill even
 var recentSpellsLogCount = 5;
 var playerStats = {};
 
+var throughputLogging = true;
+var throughputTimer = null;
+var eventCountLastSecond = 0
+var throughputCounter = [];
+var throughputCounterLimit = 600; // 10 mins
+
+/**
+ *
+ */
+function startThroughputLogging() {
+	throughputLogging = true;
+
+	throughputTimer = setInterval(
+		function() {
+			if (throughputCounter.length >= throughputCounterLimit) {
+				throughputCounter.splice(-1,1);
+			}
+			throughputCounter.push(eventCountLastSecond);
+			eventCountLastSecond = 0;
+		},
+		1000
+	);
+};
+
+function throughputStats() {
+	var stats = {};
+
+	stats.oneSec = throughputIntervalCount(1);
+	stats.tenSecs = throughputIntervalCount(10);
+	stats.thirtySecs = throughputIntervalCount(30);
+	stats.oneMin = throughputIntervalCount(60);
+	stats.twoMins = throughputIntervalCount(120);
+	stats.fiveMins = throughputIntervalCount(300);
+	stats.tenMins = throughputIntervalCount(600);
+
+	return stats;
+}
+
+function throughputIntervalCount(interval) {
+	if (throughputCounter.length < interval) {
+		return 'wait a bit...';
+	}
+
+	var count = 0;
+	var intervalEvents = throughputCounter.slice(Math.max(throughputCounter.length - interval, 1));
+	for (var i = 0; i < intervalEvents.length; i++) {
+	   count += intervalEvents[i];
+	}
+	return count
+}
+
 /**
  *
  */
@@ -242,13 +293,20 @@ app.post('/eat', function (req, res) {
 	}
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
-	console.log(JSON.stringify({
-		type: 'event',
-		data: event,
-	}));
+	// console.log(JSON.stringify({
+	// 	type: 'event',
+	// 	data: event,
+	// }));
 
+	// Main action.
 	logEventToRecentEvents(event);
 	iterateStats(event);
+
+	// throughput logging
+	if (throughputLogging) {
+		eventCountLastSecond++;
+		console.log('eventCountLastSecond', eventCountLastSecond);
+	}
 
 	return res.json({
 		ok: true,
@@ -261,10 +319,10 @@ app.get('/scoreboard', function (req, res) {
 	var scoreboard = getScoreboard();
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
-	console.log(JSON.stringify({
-		type: 'scoreboard',
-		data: scoreboard,
-	}));
+	// console.log(JSON.stringify({
+	// 	type: 'scoreboard',
+	// 	data: scoreboard,
+	// }));
 
 	return res.json({
 		msg: 'Whos who!',
@@ -308,8 +366,23 @@ app.get('/reset', function (req, res) {
 	});
 });
 
+
+/**
+ *
+ */
+app.get('/throughput', function (req, res) {
+	return res.json({
+		msg: 'throughput',
+		data: throughputStats()
+	});
+});
+
+
 app.use(express.static('app/'));
 
 app.listen(8666, function () {
 	console.log('Example app listening on port 8666!');
+	if (throughputLogging) {
+		startThroughputLogging();
+	}
 });
