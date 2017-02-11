@@ -52,7 +52,7 @@ function throughputIntervalCount(interval) {
 	}
 
 	var count = 0;
-	var intervalEvents = throughputCounter.slice(Math.max(throughputCounter.length - interval, 1));
+	var intervalEvents = throughputCounter.slice(0, interval);
 	for (var i = 0; i < intervalEvents.length; i++) {
 		count += intervalEvents[i];
 	}
