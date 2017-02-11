@@ -25,7 +25,7 @@ function startThroughputLogging() {
 			if (throughputCounter.length >= throughputCounterLimit) {
 				throughputCounter.splice(-1,1);
 			}
-			throughputCounter.push(eventCountLastSecond);
+			throughputCounter.unshift(eventCountLastSecond);
 			eventCountLastSecond = 0;
 		},
 		1000
