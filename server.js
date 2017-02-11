@@ -254,6 +254,22 @@ function validateEvent(event) {
 /**
  *
  */
+function cleanEvent(event) {
+	if (event.eventType === "playerCastSpell") {
+		//
+	}
+
+	if (event.eventType === "playerKilledEntity") {
+		event.entityType = event.entityType.replace("Craft", "");
+  	event.entityType = event.entityType.split('{')[0];
+	}
+
+  return event;
+}
+
+/**
+ *
+ */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -291,6 +307,9 @@ app.post('/eat', function (req, res) {
 			event: event
 		});
 	}
+
+	event = cleanEvent(event);
+
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
 	console.log(JSON.stringify({
@@ -372,10 +391,13 @@ app.get('/reset', function (req, res) {
 app.get('/throughput', function (req, res) {
 	return res.json({
 		msg: 'throughput',
-		data: throughputStats()
+		data: {
+			throughputStats: throughputStats(),
+			throughputCounterLimit: throughputCounterLimit,
+			throughputCounter: throughputCounter,
+		}
 	});
 });
-
 
 app.use(express.static('app/'));
 

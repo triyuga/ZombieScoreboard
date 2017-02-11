@@ -7,10 +7,8 @@ function updateScoreboard(stats) {
     $('#killCount ul').html( function() {
         var listItems = [];
         for (var entityType in stats.killCount) {
-          var entityTypeLabel = entityType.replace("Craft", "");
-          var entityTypeLabel = entityTypeLabel.split('{')[0];
           var count = stats.killCount[entityType];
-          listItems.push("<li><span class=\"slabel\">" + entityTypeLabel + ":</span> <span class=\"stat\">" + count + "</span></li>");
+          listItems.push("<li><span class=\"slabel\">" + entityType + ":</span> <span class=\"stat\">" + count + "</span></li>");
         }
         return listItems.join("\n");
     });
