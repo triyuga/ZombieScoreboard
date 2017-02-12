@@ -104,7 +104,7 @@ gulp.task('build', (done) => {
  * $ gulp server
  * description: launch the server. If there's a server already running, kill it.
  */
-gulp.task('server', function() {
+gulp.task('server-run', function() {
   if (node) node.kill()
   node = spawn('node', ['server.js'], {stdio: 'inherit'})
   node.on('close', function (code) {
@@ -118,11 +118,11 @@ gulp.task('server', function() {
  * $ gulp
  * description: start the development environment
  */
-gulp.task('server-watch', function() {
-  gulp.run('server')
+gulp.task('server', function() {
+  gulp.run('server-run')
 
   gulp.watch(['./server.js', './lib/**/*.js'], function() {
-    gulp.run('server')
+    gulp.run('server-run')
   })
 
   // Need to watch for sass changes too? Just add another watch call!

@@ -8,17 +8,68 @@ var recentSpells = []; // Tracks recent spells for fudge-assignment of kill even
 var recentSpellsLogCount = 5;
 var playerStats = {};
 
+var throughputLogging = true;
+var throughputTimer = null;
+var eventCountLastSecond = 0;
+var throughputCounter = [];
+var throughputCounterLimit = 600; // 10 mins
+
 /**
  *
  */
-function getPlayerStats() {
-	var stats = {
+function startThroughputLogging() {
+	throughputLogging = true;
+
+	throughputTimer = setInterval(
+		function() {
+			if (throughputCounter.length >= throughputCounterLimit) {
+				throughputCounter.splice(-1,1);
+			}
+			throughputCounter.unshift(eventCountLastSecond);
+			eventCountLastSecond = 0;
+		},
+		1000
+	);
+}
+
+function throughputStats() {
+	var stats = {};
+
+	stats.oneSec = throughputIntervalCount(1);
+	stats.tenSecs = throughputIntervalCount(10);
+	stats.thirtySecs = throughputIntervalCount(30);
+	stats.oneMin = throughputIntervalCount(60);
+	stats.twoMins = throughputIntervalCount(120);
+	stats.fiveMins = throughputIntervalCount(300);
+	stats.tenMins = throughputIntervalCount(600);
+
+	return stats;
+}
+
+function throughputIntervalCount(interval) {
+	if (throughputCounter.length < interval) {
+		return 'wait a bit...';
+	}
+
+	var count = 0;
+	var intervalEvents = throughputCounter.slice(0, interval);
+	for (var i = 0; i < intervalEvents.length; i++) {
+		count += intervalEvents[i];
+	}
+	return count;
+}
+
+/**
+ *
+ */
+function getScoreboard() {
+	var scoreboard = {
 		leaderBoard: getLeaderBoard(),
 		killCount: getKillCounts(),
 		spellCount: getSpellCounts(),
 	};
 
-	return stats;
+	return scoreboard;
 }
 
 /**
@@ -27,7 +78,7 @@ function getPlayerStats() {
 function iterateStats(event) {
 	var playerName = event.playerName;
 	// Ensure event has playerName.
-	if (typeof(playerName) === "undefined" || typeof(playerName) === null || playerName.length === 0) {
+	if (typeof(playerName) === "undefined" || typeof(playerName) === null || !playerName || playerName.length === 0) {
 		if (event.eventType === "playerKilledEntity") {
 			playerName = getRandomPlayerNameFromRecentSpells();
 		}
@@ -203,6 +254,22 @@ function validateEvent(event) {
 /**
  *
  */
+function cleanEvent(event) {
+	if (event.eventType === "playerCastSpell") {
+		//
+	}
+
+	if (event.eventType === "playerKilledEntity") {
+		event.entityType = event.entityType.replace("Craft", "");
+  	event.entityType = event.entityType.split('{')[0];
+	}
+
+  return event;
+}
+
+/**
+ *
+ */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -241,14 +308,24 @@ app.post('/eat', function (req, res) {
 		});
 	}
 
+	event = cleanEvent(event);
+
+
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
-	console.log({
+	console.log(JSON.stringify({
 		type: 'event',
 		data: event,
-	});
+	}));
 
+	// Main action.
 	logEventToRecentEvents(event);
 	iterateStats(event);
+
+	// throughput logging
+	if (throughputLogging) {
+		eventCountLastSecond++;
+		console.log('eventCountLastSecond', eventCountLastSecond);
+	}
 
 	return res.json({
 		ok: true,
@@ -257,18 +334,18 @@ app.post('/eat', function (req, res) {
 });
 
 // Serves data collected from mock emitter.
-app.get('/stats', function (req, res) {
-	var playerStats = getPlayerStats();
+app.get('/scoreboard', function (req, res) {
+	var scoreboard = getScoreboard();
 
 	// console.log() gets picked up Gandelf, and shipped put via UDP.
-	console.log({
-		type: 'playerStats',
-		data: playerStats,
-	});
+	console.log(JSON.stringify({
+		type: 'scoreboard',
+		data: scoreboard,
+	}));
 
 	return res.json({
 		msg: 'Whos who!',
-		data: playerStats
+		data: scoreboard
 	});
 });
 
@@ -308,8 +385,25 @@ app.get('/reset', function (req, res) {
 	});
 });
 
+/**
+ *
+ */
+app.get('/throughput', function (req, res) {
+	return res.json({
+		msg: 'throughput',
+		data: {
+			throughputStats: throughputStats(),
+			throughputCounterLimit: throughputCounterLimit,
+			throughputCounter: throughputCounter,
+		}
+	});
+});
+
 app.use(express.static('app/'));
 
 app.listen(8666, function () {
 	console.log('Zombie Scoreboard app listening on port 8666!');
+	if (throughputLogging) {
+		startThroughputLogging();
+	}
 });
