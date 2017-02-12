@@ -74,6 +74,29 @@ button.settings {
    font-weight: 700;
  }
 
+.world-record-bid {
+  // font-size: 0.9em;
+  text-align: center;
+  #currentZombieTenMinuteCount {
+    .slabel {
+      color: #999;
+    }
+    .stat {
+      font-size: 1.3em;
+      color: yellow;
+    }
+  }
+  #bestZombieTenMinuteCount {
+    .slabel {
+      color: #999;
+    }
+    .stat {
+      font-size: 1.3em;
+      color: yellow;
+    }
+  }
+}
+
 .scoreboard {
   text-align: center;
   #leaderBoard {

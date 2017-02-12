@@ -3,6 +3,15 @@ function updateScoreboard(stats) {
     if (localStorage.getItem('devMode')) {
         console.log('stats', stats);
     }
+    console.log('stats', stats);
+
+    $('#currentZombieTenMinuteCount').html( function() {
+        return "<span class=\"slabel\">Zombies Killed Last 10 Mins:</span> <span class=\"stat\">" + stats.zombieTenMinuteKillCount + "</span>";
+    });
+
+    $('#bestZombieTenMinuteCount').html( function() {
+        return "<span class=\"slabel\">Most Zombies Killed In 10 Mins:</span> <span class=\"stat\">" + stats.mostZombiesKilledInTenMins + "</span>";
+    });
 
     $('#killCount ul').html( function() {
         var listItems = [];

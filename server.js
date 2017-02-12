@@ -14,6 +14,42 @@ var eventCountLastSecond = 0;
 var throughputCounter = [];
 var throughputCounterLimit = 600; // 10 mins
 
+var zombieTenMinuteCounter = [];
+var zombieTenMinuteTimer = null;
+var mostZombiesKilledInTenMins = 0;
+var zombiesKilledLastSecond = 0;
+
+/**
+ *
+ */
+function startZombieTenMinuteLogging() {
+	zombieTenMinuteTimer = setInterval(
+		function() {
+			if (zombieTenMinuteCounter.length >= 600) {
+				zombieTenMinuteCounter.splice(-1,1);
+			}
+			zombieTenMinuteCounter.unshift(zombiesKilledLastSecond);
+			zombiesKilledLastSecond = 0;
+		},
+		1000
+	);
+}
+
+function zombieTenMinuteIntervalCount(interval) {
+	if (zombieTenMinuteCounter.length < interval) {
+		interval = zombieTenMinuteCounter.length;
+	}
+
+	var count = 0;
+	var intervalKills = zombieTenMinuteCounter.slice(0, interval);
+	for (var i = 0; i < intervalKills.length; i++) {
+		count += intervalKills[i];
+	}
+
+	return count;
+}
+
+
 /**
  *
  */
@@ -63,10 +99,17 @@ function throughputIntervalCount(interval) {
  *
  */
 function getScoreboard() {
+	var zombieTenMinuteKillCount = zombieTenMinuteIntervalCount(600);
+	if (zombieTenMinuteKillCount > mostZombiesKilledInTenMins) {
+		mostZombiesKilledInTenMins = zombieTenMinuteKillCount;
+	}
+
 	var scoreboard = {
 		leaderBoard: getLeaderBoard(),
 		killCount: getKillCounts(),
 		spellCount: getSpellCounts(),
+		zombieTenMinuteKillCount: zombieTenMinuteKillCount,
+		mostZombiesKilledInTenMins: mostZombiesKilledInTenMins,
 	};
 
 	return scoreboard;
@@ -324,7 +367,10 @@ app.post('/eat', function (req, res) {
 	// throughput logging
 	if (throughputLogging) {
 		eventCountLastSecond++;
-		console.log('eventCountLastSecond', eventCountLastSecond);
+	}
+
+	if (event.eventType === "playerKilledEntity" && event.entityType === "Zombie") {
+		zombiesKilledLastSecond++;
 	}
 
 	return res.json({
@@ -406,4 +452,5 @@ app.listen(8666, function () {
 	if (throughputLogging) {
 		startThroughputLogging();
 	}
+	startZombieTenMinuteLogging();
 });
