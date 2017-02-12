@@ -311,5 +311,5 @@ app.get('/reset', function (req, res) {
 app.use(express.static('app/'));
 
 app.listen(8666, function () {
-	console.log('Example app listening on port 8666!');
+	console.log('Zombie Scoreboard app listening on port 8666!');
 });
