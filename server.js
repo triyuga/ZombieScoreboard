@@ -426,6 +426,9 @@ app.get('/reset', function (req, res) {
 	recentEvents = [];
 	recentSpells = [];
 	playerStats = {};
+	zombieTenMinuteCounter = [];
+	zombiesKilledLastSecond = 0;
+
 	return res.json({
 		msg: 'Reset!',
 	});
