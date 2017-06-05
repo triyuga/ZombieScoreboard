@@ -1,0 +1,195 @@
+// Variables
+@import '_fonts.scss';
+@import '_variables.scss';
+
+body {
+  background-color: black;
+  position: relative;
+  overflow: scroll;
+}
+
+body.zapzap {
+  background-image: url(../img/lightning_bg.gif);
+  background-size: 100% 100%;
+}
+
+body.faceeater {
+  background-image: url(../img/face_eater.gif);
+  background-size: 100% 100%;
+}
+
+body.rocker {
+  background-image: url(../img/zombie_rocker.gif);
+  background-size: 100% 100%;
+}
+
+.animated-zombie {
+  width: 160px;
+  height: 160px;
+  top: 30px;
+  left: 20px;
+  position: fixed;
+  background-image: url(../img/zombie_walk.gif);
+  background-image: url(../img/get_down_zombie.gif);
+  background-size: 100% 100%;
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  h1.title {
+    margin-top: 40px;
+    font-size: 66px;
+    .title--magikcraft {
+      color: #666;
+      .m {
+        color: red;
+        font-size: 1.2em;
+      }
+    }
+    .title--zombie {
+      color: $pukeGreen;
+      font-size: 1.2em;
+    }
+    .title--apocalypse {
+      color: $pukeGreen;
+      // color: #555;
+    }
+  }
+}
+
+button.settings {
+  position: fixed;
+  top: 40px;
+  right: 30px;
+  background-image: url(../img/config.png);
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+}
+
+.disp-list {
+  padding: 0;
+  list-style-type: none;
+ }
+
+ .coloum-title {
+   font-size: 1.5em;
+   font-weight: 700;
+ }
+
+.world-record-bid {
+  // font-size: 0.9em;
+  text-align: center;
+  #currentZombieTenMinuteCount {
+    .slabel {
+      color: #999;
+    }
+    .stat {
+      font-size: 1.3em;
+      color: yellow;
+    }
+  }
+  #bestZombieTenMinuteCount {
+    .slabel {
+      color: #999;
+    }
+    .stat {
+      font-size: 1.3em;
+      color: yellow;
+    }
+  }
+}
+
+.scoreboard {
+  text-align: center;
+  #leaderBoard {
+    h3 {
+      color: deepskyblue;
+    }
+  }
+  #killCount {
+    h3 {
+      color: red;
+    }
+  }
+  #spellCount {
+    h3 {
+      color: $fluroGreen;
+    }
+  }
+
+  .col {
+    position: relative;
+    ul {
+      list-style: none;
+      font-size: 1.2em;
+      li {
+        list-style-type: none;
+        padding: 5px 0;
+        h4 {
+          color: $lightPurple;
+        }
+        .slabel {
+          color: $colbateBlue;
+        }
+        .stat {
+          font-size: 1.3em;
+          color: yellow;
+        }
+      }
+    }
+  }
+}
+
+.feature-graphic {
+  display: none
+}
+
+.feature-graphic.revealed {
+  display: block;
+}
+
+.feature-graphic--1 {
+  width: 150px;
+  height: 220px;
+  background-image: url(../img/deal_with_it.gif);
+  background-color: #999;
+  background-size: 100%;
+  margin: 0 auto;
+
+  position: absolute;
+  top: 100px;
+  left: -70px
+}
+.feature-graphic--2 {
+  margin-top: 30px;
+  background-image: url(../img/mob_party.gif);
+  width: 100%;
+  background-size: 100%;
+  height: 200px;
+  opacity: 0.7;
+}
+.feature-graphic--3 {
+  margin-top: 30px;
+  background-image: url(../img/surfer_zombie.gif);
+  width: 250px;
+  background-size: 100%;
+  height: 250px;
+  margin: 0 auto;
+  opacity: 0.7;
+}
+
+.azure-logo {
+  width: 300px;
+  height: 100px;
+  background-size: 100%;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  margin-left: -150px;
+  background-image: url(../img/poweredby_microsoft_azure.png);
+}
+
+

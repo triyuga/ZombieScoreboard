@@ -396,6 +396,19 @@ app.get('/scoreboard', function (req, res) {
 });
 
 // Serves data collected from mock emitter.
+app.get('/snapshot', function (req, res) {
+	var file = req.query.file;
+	var scoreboard = $.getJSON("../snapshots/" + file, function(json) {
+		return JSON.parse(json);
+  });
+
+	return res.json({
+		msg: 'Whos who!',
+		data: scoreboard
+	});
+});
+
+// Serves data collected from mock emitter.
 app.get('/playerStats', function (req, res) {
 	return res.json({
 		msg: 'playerStats',

@@ -1,5 +1,13 @@
+// // Uncomment this to consume local JSON snapshot.
+// var file = "../2017-02-13--18-30-00.json";
+// $.getJSON(file, function(res) {
+//   var stats = res.data;
+//   updateScoreboard(stats);
+// });
+
+
 function nomnom() {
-  var restURL = localStorage.getItem('restURL');
+  // var restURL = localStorage.getItem('restURL');
 
   $.ajax({
     method: "GET",
@@ -18,6 +26,15 @@ function nomnom() {
   });
 }
 
-nomnom();
-var interval = localStorage.getItem('interval');
-setInterval(nomnom, interval);
+var restURL = localStorage.getItem('restURL');
+var isStaticJSON = (restURL.indexOf(".json"));
+if (isStaticJSON) {
+  $.getJSON(restURL, function(json) {
+    updateScoreboard(json);
+  });
+}
+else {
+  nomnom();
+  var interval = localStorage.getItem('interval');
+  setInterval(nomnom, interval);
+}

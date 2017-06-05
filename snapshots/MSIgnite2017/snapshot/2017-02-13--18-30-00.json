@@ -1,0 +1,371 @@
+{
+"msg": "Whos who!",
+"data": {
+"leaderBoard": [
+{
+"playerName": "Xx_MEDIARITE_xX",
+"spells": {
+"invoco": 12520,
+"shakti": 12518,
+"aspecto": 12518,
+"incendium": 2
+},
+"kills": {},
+"totalSpells": 37558,
+"totalKills": 0,
+"totalEvents": 37558
+},
+{
+"playerName": "GOD",
+"spells": {},
+"kills": {
+"Player": 448,
+"Zombie": 31687,
+"Creeper": 2,
+"Skeleton": 11,
+"Bat": 7,
+"Chicken": 77,
+"VillagerZombie": 1,
+"Spider": 5,
+"Witch": 1,
+"Cow": 4,
+"Pig": 22,
+"PigZombie": 2,
+"EnderDragon": 1
+},
+"totalSpells": 0,
+"totalKills": 32268,
+"totalEvents": 32268
+},
+{
+"playerName": "Awesomised2",
+"spells": {
+"invoco": 166,
+"infierno": 8,
+"volare": 3,
+"dixit": 5,
+"shakti": 5263,
+"aspecto": 5263,
+"auxilium": 2,
+"msg": 2
+},
+"kills": {},
+"totalSpells": 10712,
+"totalKills": 0,
+"totalEvents": 10712
+},
+{
+"playerName": "Purpsta",
+"spells": {
+"invoco": 115,
+"shakti": 4507,
+"aspecto": 4507,
+"volare": 1,
+"dixit": 129,
+"auxilium": 38,
+"msg": 38
+},
+"kills": {},
+"totalSpells": 9335,
+"totalKills": 0,
+"totalEvents": 9335
+},
+{
+"playerName": "THEALIVEENDER",
+"spells": {
+"invoco": 224,
+"shakti": 3153,
+"aspecto": 3153,
+"iacta": 27
+},
+"kills": {},
+"totalSpells": 6557,
+"totalKills": 0,
+"totalEvents": 6557
+},
+{
+"playerName": "sitapati",
+"spells": {
+"invoco": 140,
+"aspecto": 67,
+"doNTimes": 5883,
+"type": 14
+},
+"kills": {},
+"totalSpells": 6104,
+"totalKills": 0,
+"totalEvents": 6104
+},
+{
+"playerName": "asdf657",
+"spells": {
+"invoco": 174,
+"shakti": 2183,
+"aspecto": 2183,
+"iacta": 12,
+"auxilium": 29,
+"dixit": 58,
+"msg": 29,
+"infierno": 181
+},
+"kills": {},
+"totalSpells": 4849,
+"totalKills": 0,
+"totalEvents": 4849
+},
+{
+"playerName": "abznak",
+"spells": {
+"invoco": 111,
+"shakti": 998,
+"aspecto": 1003,
+"dixit": 1001,
+"hic": 17,
+"ianuae": 379,
+"doNTimes": 72,
+"stella": 5
+},
+"kills": {},
+"totalSpells": 3586,
+"totalKills": 0,
+"totalEvents": 3586
+},
+{
+"playerName": "ljblockbuster",
+"spells": {
+"invoco": 296,
+"shakti": 1362,
+"aspecto": 1362,
+"volare": 6,
+"dixit": 6,
+"infierno": 26
+},
+"kills": {},
+"totalSpells": 3058,
+"totalKills": 0,
+"totalEvents": 3058
+},
+{
+"playerName": "TheDerpJoker",
+"spells": {
+"invoco": 178,
+"infierno": 8,
+"volare": 3,
+"dixit": 3,
+"shakti": 801,
+"aspecto": 801
+},
+"kills": {},
+"totalSpells": 1794,
+"totalKills": 0,
+"totalEvents": 1794
+},
+{
+"playerName": "death667b",
+"spells": {
+"invoco": 56,
+"shakti": 674,
+"aspecto": 674,
+"infierno": 85,
+"dixit": 9
+},
+"kills": {},
+"totalSpells": 1498,
+"totalKills": 0,
+"totalEvents": 1498
+},
+{
+"playerName": "benandaaron",
+"spells": {
+"invoco": 197,
+"volare": 4,
+"dixit": 4,
+"shakti": 189,
+"aspecto": 189,
+"infierno": 4
+},
+"kills": {},
+"totalSpells": 587,
+"totalKills": 0,
+"totalEvents": 587
+},
+{
+"playerName": "triyuga",
+"spells": {
+"invoco": 77,
+"shakti": 250,
+"aspecto": 250,
+"dixit": 5
+},
+"kills": {},
+"totalSpells": 582,
+"totalKills": 0,
+"totalEvents": 582
+},
+{
+"playerName": "magikcraft_io",
+"spells": {
+"invoco": 191,
+"shakti": 180,
+"aspecto": 180,
+"infierno": 11
+},
+"kills": {},
+"totalSpells": 562,
+"totalKills": 0,
+"totalEvents": 562
+},
+{
+"playerName": "RaginExpression",
+"spells": {
+"invoco": 181,
+"volare": 4,
+"dixit": 4,
+"shakti": 177,
+"aspecto": 177
+},
+"kills": {},
+"totalSpells": 543,
+"totalKills": 0,
+"totalEvents": 543
+},
+{
+"playerName": "orycyberdemon",
+"spells": {
+"invoco": 157,
+"shakti": 157,
+"aspecto": 157
+},
+"kills": {},
+"totalSpells": 471,
+"totalKills": 0,
+"totalEvents": 471
+},
+{
+"playerName": "King_Slender_Man",
+"spells": {
+"invoco": 155,
+"shakti": 155,
+"aspecto": 155
+},
+"kills": {},
+"totalSpells": 465,
+"totalKills": 0,
+"totalEvents": 465
+},
+{
+"playerName": "MrShockBoard",
+"spells": {
+"invoco": 122,
+"shakti": 122,
+"aspecto": 119
+},
+"kills": {},
+"totalSpells": 363,
+"totalKills": 0,
+"totalEvents": 363
+},
+{
+"playerName": "ProgHouse2016",
+"spells": {
+"invoco": 120,
+"volare": 4,
+"dixit": 4,
+"shakti": 116,
+"aspecto": 116
+},
+"kills": {},
+"totalSpells": 360,
+"totalKills": 0,
+"totalEvents": 360
+},
+{
+"playerName": "Ragingexpression",
+"spells": {
+"invoco": 114,
+"shakti": 107,
+"aspecto": 107,
+"volare": 7,
+"dixit": 7
+},
+"kills": {},
+"totalSpells": 342,
+"totalKills": 0,
+"totalEvents": 342
+},
+{
+"playerName": "timtam30",
+"spells": {
+"invoco": 96,
+"infierno": 5,
+"shakti": 86,
+"aspecto": 86,
+"volare": 5,
+"dixit": 5
+},
+"kills": {},
+"totalSpells": 283,
+"totalKills": 0,
+"totalEvents": 283
+},
+{
+"playerName": "moniquehay05",
+"spells": {
+"invoco": 74,
+"shakti": 74,
+"aspecto": 74
+},
+"kills": {},
+"totalSpells": 222,
+"totalKills": 0,
+"totalEvents": 222
+},
+{
+"playerName": "Briggsc",
+"spells": {
+"invoco": 4,
+"shakti": 4,
+"aspecto": 4
+},
+"kills": {},
+"totalSpells": 12,
+"totalKills": 0,
+"totalEvents": 12
+}
+],
+"killCount": {
+"Player": 448,
+"Zombie": 31687,
+"Creeper": 2,
+"Skeleton": 11,
+"Bat": 7,
+"Chicken": 77,
+"VillagerZombie": 1,
+"Spider": 5,
+"Witch": 1,
+"Cow": 4,
+"Pig": 22,
+"PigZombie": 2,
+"EnderDragon": 1
+},
+"spellCount": {
+"invoco": 15468,
+"aspecto": 33145,
+"doNTimes": 5955,
+"type": 14,
+"shakti": 33076,
+"volare": 37,
+"dixit": 1240,
+"infierno": 328,
+"auxilium": 69,
+"msg": 69,
+"incendium": 2,
+"iacta": 39,
+"hic": 17,
+"ianuae": 379,
+"stella": 5
+},
+"zombieTenMinuteKillCount": 12034,
+"mostZombiesKilledInTenMins": 13584
+}
+}
