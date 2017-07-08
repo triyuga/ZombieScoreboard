@@ -16,7 +16,7 @@ var throughputCounterLimit = 600; // 10 mins
 
 var zombieTenMinuteCounter = [];
 var zombieTenMinuteTimer = null;
-var mostZombiesKilledInTenMins = 0;
+var mostZombiesKilledInTenMins = 8675;
 var zombiesKilledLastSecond = 0;
 
 /**
@@ -25,7 +25,7 @@ var zombiesKilledLastSecond = 0;
 function startZombieTenMinuteLogging() {
 	zombieTenMinuteTimer = setInterval(
 		function() {
-			if (zombieTenMinuteCounter.length >= 600) {
+			if (zombieTenMinuteCounter.length >= 30) {
 				zombieTenMinuteCounter.splice(-1,1);
 			}
 			zombieTenMinuteCounter.unshift(zombiesKilledLastSecond);
@@ -192,7 +192,7 @@ function getKillCounts() {
 	for (var playerName in playerStats) {
 		for (var entityType in playerStats[playerName].kills) {
 			if (!killCounts[entityType]) {
-				killCounts[entityType] = 0;
+				killCounts[entityType] = 500;
 			}
 			killCounts[entityType] += playerStats[playerName].kills[entityType];
 		}
@@ -243,7 +243,7 @@ function addSpellToRecentSpells(event) {
 	}
 
 	// If not attack spell, skip.
-	if (event.spellName !== "fulmen" && event.spellName !== "ignifera") {
+	if (event.spellName !== "shakti" && event.spellName !== "infierno") {
 		return;
 	}
 

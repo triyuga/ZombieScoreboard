@@ -1,0 +1,70 @@
+{
+	"msg": "Whos who!",
+	"data": {
+		"killCount": {
+			"Zombie": 36789,
+			"Cow": 56,
+			"Chicken": 99,
+			"Wolf": 8,
+			"Player": 600,
+			"Bat": 5,
+			"Skeleton": 557,
+			"Creeper": 25,
+			"Sheep": 33,
+			"Horse": 3,
+			"Spider": 101,
+			"Witch": 12,
+			"Villager": 29
+		},
+		"spellCount": {
+			"infierno": 33076,
+			"invoco": 15468,
+			"aspecto": 33645,
+			"doNTimes": 5953,
+			"dixit": 1401,
+			"shakti": 225,
+			"satio": 33,
+			"valore": 60,
+			"hic": 2432,
+			"momento": 105,
+			"ianuae": 154,
+			"declaro": 34
+		},
+		"zombieTenMinuteKillCount": 14934,
+		"mostZombiesKilledInTenMins": 15896,
+		"leaderBoard": [
+			{
+				"playerName": "VRCube",
+				"totalEvents": 38795
+			},
+			{
+				"playerName": "sitapati",
+				"totalEvents": 34591
+			},
+			{
+				"playerName": "eirikangry",
+				"totalEvents": 12395
+			},
+			{
+				"playerName": "zploink",
+				"totalEvents": 9857
+			},
+			{
+				"playerName": "Felex0006",
+				"totalEvents": 6783
+			},
+			{
+				"playerName": "Purpsta",
+				"totalEvents": 6031
+			},
+			{
+				"playerName": "GOD",
+				"totalEvents": 4990
+			},
+			{
+				"playerName": "MesterHenrik",
+				"totalEvents": 3236
+			}
+		]
+	}
+}

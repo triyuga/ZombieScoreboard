@@ -27,8 +27,10 @@ function nomnom() {
 }
 
 var restURL = localStorage.getItem('restURL');
-var isStaticJSON = (restURL.indexOf(".json"));
+var isStaticJSON = (restURL.indexOf(".json") !== -1);
+console.log('isStaticJSON', isStaticJSON);
 if (isStaticJSON) {
+  console.log('isStaticJSON', isStaticJSON);
   $.getJSON(restURL, function(json) {
     updateScoreboard(json);
   });
