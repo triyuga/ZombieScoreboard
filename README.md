@@ -1,5 +1,5 @@
 # ZombieScoreboard
-Zombie Kill Scoreboard for MSIgnite Zombie Apocalypse.
+Zombie Kill Scoreboard for MSIgnite Zombie Apocalypse!
 
 To build:
 `$ gulp`
