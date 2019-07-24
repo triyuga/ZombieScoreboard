@@ -1,5 +1,5 @@
 // Uncomment this to consume local JSON snapshot.
-var file = "snapshot/2017-02-13--18-30-00.json";
+var file = "../snapshot/2017-02-13--18-30-00.json";
 $.getJSON(file, function(res) {
   var stats = res.data;
   updateScoreboard(stats);
